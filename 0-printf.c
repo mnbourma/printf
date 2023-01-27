@@ -8,7 +8,7 @@
 int _printf(const char *format, ...)
 {
 	int length;
-	char *string;
+	const char *string;
 	va_list args;
 
 	va_start(args, format);
@@ -30,8 +30,11 @@ int _printf(const char *format, ...)
 				case 's':
 					length += printf("%s", va_arg(args, char *));
 					break;
-				default:
+				case '%':
 					length += printf("%%");
+					break;
+				default:
+					length += printf("%%%c", *string);
 			}
 		}
 	}
