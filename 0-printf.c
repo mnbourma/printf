@@ -1,6 +1,5 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include <string.h>
 /**
  * _printf - produces output according to a format.
  * @format: this is a character string composed of zero or more directives.
@@ -8,35 +7,34 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int i;
+	int length;
+	char *string;
 	va_list args;
 
 	va_start(args, format);
-	for (i = 0; i < (int)strlen(format); i++)
+	length = 0;
+	for (string = format; *string != '\0'; string++)
 	{
-		if (format[i] != '%')
+		if (*string != '%')
 		{
-			putchar(format[i]);
+			length += printf("%c", *string);
 		}
 		else
 		{
-			i++;
-			switch (format[i])
+			string++;
+			switch (*string)
 			{
 				case 'c':
-					printf("%c", va_arg(args, int));
+					length += printf("%c", va_arg(args, int));
 					break;
 				case 's':
-					printf("%s", va_arg(args, char *));
-					break;
-				case '%':
-					printf("%%%%");
+					length += printf("%s", va_arg(args, char *));
 					break;
 				default:
-					printf("%%");
+					length += printf("%%");
 			}
 		}
 	}
 	va_end(args);
-	return (0);
+	return (length);
 }
