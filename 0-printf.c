@@ -36,8 +36,8 @@ int _printf(const char *format, ...)
 			case 'X':
 				length += printf("%X", va_arg(args, int));
 				break;
-			case 'u':
-				length += printf("%u", va_arg(args, int));
+			case 'p':
+				length += printf("%p", va_arg(args, char *));
 				break;
 			default:
 				length += printf("%%%c", *string);
