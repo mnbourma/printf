@@ -34,7 +34,7 @@ int _printf(const char *format, ...)
 				length += printf("%%");
 				break;
 			case 'X':
-				length += printf("%X"va_arg(args, int));
+				length += printf("%X", va_arg(args, int));
 				break;
 			default:
 				length += printf("%%%c", *string);
