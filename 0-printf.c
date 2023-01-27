@@ -15,30 +15,27 @@ int _printf(const char *format, ...)
 	length = 0;
 	for (string = format; *string != '\0'; string++)
 	{
-		if (*string != '%')
+		while (*string != '%')
 		{
 			length += printf("%c", *string);
-		}
-		else
-		{
 			string++;
-			switch (*string)
-			{
-				case 'c':
-					length += printf("%c", va_arg(args, int));
-					break;
-				case 's':
-					length += printf("%s", va_arg(args, char *));
-					break;
-				case '%':
-					length += printf("%%");
-					break;
-				case 'x':
-					length += printf("%x", va_arg(args, int));
-					break;
-				default:
-					length += printf("%%%c", *string);
-			}
+		}
+		switch (*string++)
+		{
+			case 'c':
+				length += printf("%c", va_arg(args, int));
+				break;
+			case 's':
+				length += printf("%s", va_arg(args, char *));
+				break;
+			case '%':
+				length += printf("%%");
+				break;
+			case 'X':
+				length += printf("%X", va_arg(args, int));
+				break;
+			default:
+				length += printf("%%%c", *string);
 		}
 	}
 	va_end(args);
