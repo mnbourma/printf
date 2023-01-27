@@ -1,12 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 /**
- * case - checks format cases.
- * @c: this is the format character.
- * Return: length of the formated string.
- */
-int case(char c);
-/**
  * _printf - produces output according to a format.
  * @format: this is a character string composed of zero or more directives.
  * Return: always return zero.
@@ -28,44 +22,25 @@ int _printf(const char *format, ...)
 		else
 		{
 			string++;
-			length += case(*string);
+			switch (*string)
+			{
+				case 'c':
+					length += printf("%c", va_arg(args, int));
+					break;
+				case 's':
+					length += printf("%s", va_arg(args, char *));
+					break;
+				case '%':
+					length += printf("%%");
+					break;
+				case 'x':
+					length += printf("%x", va_arg(args, int));
+					break;
+				default:
+					length += printf("%%%c", *string);
+			}
 		}
 	}
 	va_end(args);
-	return (length);
-}
-/**
- * case - checks format cases.
- * @c: this is the format character.
- * Return: length of the formated string.
- */
-int case(char c)
-{
-	int length;
-
-	length = 0;
-	switch (*string)
-	{
-		case 'c':
-			length += printf("%c", va_arg(args, int));
-			break;
-		case 's':
-			length += printf("%s", va_arg(args, char *));
-			break;
-		case '%':
-			length += printf("%%");
-			break;
-		case 'd':
-			length += printf("%d", va_arg(args, int));
-			break;
-		case 'i':
-			length += printf("%i", va_arg(args, int));
-			break;
-		case 'x':
-			length += printf("%x", va_arg(args, int));
-			break;
-		default:
-			length += printf("%%%c", *string);
-	}
 	return (length);
 }
