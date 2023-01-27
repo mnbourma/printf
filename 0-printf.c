@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
+#include <limits.h>
 /**
  * _printf - produces output according to a format.
  * @format: this is a character string composed of zero or more directives.
@@ -15,12 +16,13 @@ int _printf(const char *format, ...)
 	length = 0;
 	for (string = format; *string != '\0'; string++)
 	{
-		while (*string != '%')
+		if (*string != '%')
 		{
 			length += printf("%c", *string);
-			string++;
+			continue;
 		}
-		switch (*string++)
+		string++;
+		switch (*string)
 		{
 			case 'c':
 				length += printf("%c", va_arg(args, int));
@@ -30,9 +32,6 @@ int _printf(const char *format, ...)
 				break;
 			case '%':
 				length += printf("%%");
-				break;
-			case 'X':
-				length += printf("%X", va_arg(args, int));
 				break;
 			default:
 				length += printf("%%%c", *string);
