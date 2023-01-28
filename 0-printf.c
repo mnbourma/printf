@@ -18,29 +18,23 @@ int _printf(const char *format, ...)
 	{
 		if (*string != '%')
 		{
-			length += printf("%c", *string);
+			length += fprintf(stdout, "%c", *string);
 			continue;
 		}
 		string++;
 		switch (*string)
 		{
 			case 'c':
-				length += printf("%c", va_arg(args, int));
+				length += fprintf(stdout, "%c", va_arg(args, int));
 				break;
 			case 's':
-				length += printf("%s", va_arg(args, char *));
+				length += fprintf(stdout, "%s", va_arg(args, char *));
 				break;
 			case '%':
-				length += printf("%%");
-				break;
-			case 'X':
-				length += printf("%X", va_arg(args, int));
-				break;
-			case 'p':
-				length += printf("%p", va_arg(args, char *));
+				length += fprintf(stdout, "%%");
 				break;
 			default:
-				length += printf("%%%c", *string);
+				length += fprintf(stdout, "%%%c", *string);
 		}
 	}
 	va_end(args);
